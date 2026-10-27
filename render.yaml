@@ -1,0 +1,13 @@
+# Single-container deployment configuration. The container runs Next.js,
+# FastAPI, and Nginx behind one public port. SnapDeploy may use Dockerfile directly.
+services:
+  - type: web
+    name: btc-liquidity-radar
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: DB_PATH
+        value: /data/radar.db

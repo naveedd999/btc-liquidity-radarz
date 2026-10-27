@@ -1,0 +1,13 @@
+services:
+  btc-liquidity-radar:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: 8080
+      DB_PATH: /data/radar.db
+    volumes:
+      - radar-data:/data
+    restart: unless-stopped
+volumes:
+  radar-data:
