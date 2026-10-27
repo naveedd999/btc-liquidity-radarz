@@ -9,7 +9,7 @@ import httpx, websockets
 SYMBOL = 'BTCUSDT'
 REST = 'https://fapi.binance.com'
 WS = 'wss://fstream.binance.com/stream'
-DB_PATH = Path(os.getenv('DB_PATH', '/data/radar.db'))
+DB_PATH = Path(os.getenv('DB_PATH', '/tmp/radar.db'))
 DB_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 state = {
@@ -24,6 +24,7 @@ state = {
 }
 clients = set(); trades = deque(maxlen=500); history = deque(maxlen=240); events = deque(maxlen=80); resync_history = deque(maxlen=30)
 book = {'bids': {}, 'asks': {}}; lock = asyncio.Lock(); resync_event = asyncio.Event(); last_depth_id = None
+last_event_ms = {}
 
 def now(): return int(time.time() * 1000)
 def num(x):
